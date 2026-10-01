@@ -71,7 +71,7 @@ fig, ax = plt.subplots(figsize=(7, 4.5))
 for r in runs:
     C, E = hist(r["raw"]["custom_counts"]); gs = sorted(set(C) | set(E))
     xs = [g for g in gs if E[g] >= 4]; ys = [2 * E[g] / (C[g] + E[g]) for g in xs]
-    ax.semilogy(xs, ys, "o-" if r["meta"]["d1"] == 3 else "s--", ms=3, lw=1, alpha=.8, label=label(r))
-g = np.arange(0, 80); ax.semilogy(g, 10 ** (-g / 10), "k:", label="10^(-gap/10)")
-ax.set_xlabel("complementary gap (dB)"); ax.set_ylabel("P(error | gap)  (x2, S->T)"); ax.set_title("cultivation output: error probability vs decoder gap"); ax.grid(alpha=.3, which="both"); ax.legend(fontsize=6, ncol=2)
+    ax.semilogy(xs, ys, "o-" if r["meta"]["d1"] == 3 else "s--", ms=3, lw=1, alpha=.8, label=f"$d_1={r['meta']['d1']}$, $d_2={r['meta']['d2']}$, $p={r['meta']['p']:g}$")
+g = np.arange(0, 80); ax.semilogy(g, 10 ** (-g / 10), "k:", label="$10^{-g/10}$")
+ax.set_xlabel("complementary gap $g$ (dB)"); ax.set_ylabel("$P(\\mathrm{err}\\,|\\,g)$  ($\\times2$, $S\\to T$)"); ax.set_title("cultivation output: error probability vs decoder gap"); ax.grid(alpha=.3, which="both"); ax.legend(fontsize=6, ncol=2)
 fig.tight_layout(); fig.savefig(RESULTS / "fig7_gap_calibration.png", dpi=300); print("fig7 written")

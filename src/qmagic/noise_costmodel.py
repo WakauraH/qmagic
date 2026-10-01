@@ -78,6 +78,7 @@ import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
 fig, ax = plt.subplots(figsize=(6.5, 4.2))
 for m in fits:
     pts = sorted([(d, v["X"]["pL"] + v["Z"]["pL"]) for (mm, p, d), v in agg.items() if mm == m and p == 1e-3 and v["X"]["errors"] + v["Z"]["errors"] >= 20])
-    ax.semilogy([d for d, _ in pts], [pl for _, pl in pts], "o-", label=f"{m}  (Λ≈{fits[m]['Lambda_1e3']:.0f})")
-ax.set_xlabel("d"); ax.set_ylabel("p_L = p_X + p_Z per d rounds (p=1e-3 total)"); ax.set_title("data block under noise models (p = 1e-3 total)"); ax.grid(alpha=.3, which="both"); ax.legend(fontsize=8)
+    nice = {"uniform": "uniform depolarizing", "biased_10": "$Z$-biased, $\\eta=10$", "biased_100": "$Z$-biased, $\\eta=100$", "erasure_0.5": "heralded erasure, 50%", "erasure_0.9": "heralded erasure, 90%"}[m]
+    ax.semilogy([d for d, _ in pts], [pl for _, pl in pts], "o-", label=f"{nice}  ($\\Lambda\\approx{fits[m]['Lambda_1e3']:.0f}$)")
+ax.set_xticks([3, 5, 7, 9]); ax.set_xlabel("$d$"); ax.set_ylabel("$p_L=p_X+p_Z$ per $d$ rounds"); ax.set_title("data block under noise models ($p=10^{-3}$ total)"); ax.grid(alpha=.3, which="both"); ax.legend(fontsize=8)
 fig.tight_layout(); fig.savefig(RESULTS / "fig9_noise_models.png", dpi=300); print("fig9 written")

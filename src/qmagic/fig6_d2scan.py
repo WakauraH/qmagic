@@ -13,9 +13,9 @@ for i, p in enumerate((1e-3, 5e-4)):
     src = [r for r in json.load(open(find("cultiv_d2scan_d3_5e7.json"))) if r["meta"]["p"] == 1e-3] + json.load(open(find("cultiv_d2scan_d3_p5e4_3e8.json"))) + json.load(open(find("cultiv_validate_d15_2e7.json"))) + json.load(open(find("cultiv_d2scan_d5_5e8.json")))
     for r in src:
         if r["meta"]["p"] != p: continue
-        t = thin(r["curve"]); ax[i].loglog([x["v"] for x in t], [x["err"] for x in t], "o-", label=f"ours d1={r['meta']['d1']}, d2={r['meta']['d2']} (q={r['q']})")
+        t = thin(r["curve"]); ax[i].loglog([x["v"] for x in t], [x["err"] for x in t], "o-", label=f"this work, $d_1={r['meta']['d1']}$, $d_2={r['meta']['d2']}$ ($q={r['q']}$)")
     for d1 in (3, 5):
         pts = sorted([x for x in g if "This Work" in x["c"] and x["state"] == "T" and x["p"] == p and x["d1"] == d1 and x["errors"] >= 4], key=lambda x: x["v"])
-        ax[i].loglog([x["v"] for x in pts], [x["err"] for x in pts], "k--" if d1 == 3 else "k:", alpha=.7, label=f"Gidney 2024 d1={d1}, d2=15")
-    ax[i].set_title(f"p={p:g}: cultivation error vs expected volume"); ax[i].set_xlabel("expected qubit·rounds per kept T (incl. retries)"); ax[i].set_ylabel("error per kept T state"); ax[i].grid(alpha=.3, which="both"); ax[i].legend(fontsize=7)
+        ax[i].loglog([x["v"] for x in pts], [x["err"] for x in pts], "k--" if d1 == 3 else "k:", alpha=.7, label=f"Gidney 2024, $d_1={d1}$, $d_2=15$")
+    ax[i].set_title(f"$p={p:g}$: cultivation error vs expected volume"); ax[i].set_xlabel("expected qubit$\\cdot$rounds per accepted $|T\\rangle$ (incl. retries)"); ax[i].set_ylabel("error per accepted $|T\\rangle$ state"); ax[i].grid(alpha=.3, which="both"); ax[i].legend(fontsize=7)
 fig.tight_layout(); fig.savefig(RESULTS / "fig6_d2scan.png", dpi=300); print("fig6 written")
