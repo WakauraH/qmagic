@@ -1,0 +1,22 @@
+diff --git a/src/cultiv/_stats_util.py b/src/cultiv/_stats_util.py
+index 8c17a10..199cf95 100755
+--- a/src/cultiv/_stats_util.py
++++ b/src/cultiv/_stats_util.py
+@@ -44,7 +44,7 @@ def compute_expected_injection_growth_volume(
+             for t in inst.targets_copy():
+                 if t.is_qubit_target:
+                     layer_qubits[num_layers].add(t.qubit_value)
+-        elif inst.name in ['TICK', 'QUBIT_COORDS', 'X_ERROR', 'DEPOLARIZE1', 'DEPOLARIZE2', 'Z_ERROR', 'OBSERVABLE_INCLUDE']:
++        elif inst.name in ['TICK', 'QUBIT_COORDS', 'X_ERROR', 'DEPOLARIZE1', 'DEPOLARIZE2', 'Z_ERROR', 'OBSERVABLE_INCLUDE', 'PAULI_CHANNEL_1', 'PAULI_CHANNEL_2', 'Y_ERROR']:
+             pass
+         elif inst.name == 'DETECTOR':
+             d = len(det_times)
+@@ -57,7 +57,7 @@ def compute_expected_injection_growth_volume(
+     for l in sorted(layer_qubits.keys()):
+         layer_qubits[l] |= layer_qubits[l - 1]
+     layer_passes = collections.defaultdict(lambda: 1)
+-    dem = circuit.detector_error_model()
++    dem = circuit.detector_error_model(approximate_disjoint_errors=True)
+     for inst in dem.flattened():
+         if inst.type == 'error':
+             layer = min((
