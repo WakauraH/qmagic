@@ -47,6 +47,7 @@ def main():
     fails = 0
     if a.calib:   # sequential designs (~2 + ~4 min on 16 cores); outputs *_seq.json so the shipped calibrations stay the paper's inputs
         fails += run_module("qmagic.calib_gidney", []); fails += run_module("qmagic.calib_noise", [])
+        fails += run_module("qmagic.cultiv_enum", ["4"])          # exact d1=3 cultivation-stage floor (seconds)
     if a.cultiv:
         if not EXTERNAL.exists(): sys.exit("external repo missing: run scripts/fetch_external.sh")
         fails += run_module("qmagic.cultiv_noise", [])
