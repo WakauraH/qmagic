@@ -38,7 +38,7 @@ Where the paper's numbers come from:
 | paper | file(s) |
 |---|---|
 | Table II, III, VI; Fig. 3 | `claims_v3.json`, `sensitivity_v3.json` (from `params_v3.json`) |
-| Fig. 1, Sec. III/IV floors | `params_v3.json` (distillation rows), `factories_2level_d11.json`, `calib_perp.json`, `data/cultiv_enum_d3.json` (exact d₁=3 cultivation-stage floor) |
+| Fig. 1, Sec. III/IV floors | `params_v3.json` (distillation rows), `factories_2level_d11.json`, `calib_perp.json`, `data/cultiv_enum_d{3,5}.json` (exact cultivation-stage floors) |
 | Fig. 2 | `data/cultiv_*.json`, `data/gidney2024_fig1_points.json` |
 | Sec. V.D, Fig. 4 | `gap_qem.json`, `cutoff` step (stdout) |
 | Sec. V.E, Table V, Fig. 5 | `q3_nmax.csv`, `noise_costmodel.json` |
@@ -55,7 +55,8 @@ scripts/fetch_external.sh               # clones Strilanc/magic-state-cultivatio
 qmagic-reproduce --calib                # surface-code memory calibrations with sequential stopping (~6 min on 16 cores);
                                         # writes results/calib_*_seq.json next to the shipped data/calib_*.json
 qmagic-reproduce --cultiv               # cultivation under biased noise (hours)
-python -m qmagic.cultiv_enum 5          # exact d1=3 cultivation-stage floor by error-set enumeration (5 min; weight 4: 0.1 s)
+python -m qmagic.cultiv_enum 5 3        # exact d1=3 cultivation-stage floor by error-set enumeration (5 min; weight 4: 0.1 s)
+python -m qmagic.cultiv_enum 5 5        # same for d1=5 (weight 5, ~45 min)
 python -m qmagic.cultivation <circuit_dir> <out.json> <shots> [procs]   # cultivation sampling runner (d2 scans, deep tails)
 python -m pytest -m external            # import check against the external repository
 ```

@@ -1,0 +1,36 @@
+{
+ "0.001": {
+  "p": 0.001,
+  "max_weight": 5,
+  "keep_rate": 0.1439581767577935,
+  "heralded_error_rate_proxy": 2.861794184098471e-10,
+  "floor_T": 5.723588368196942e-10,
+  "by_weight_proxy": {
+   "0": 0.0,
+   "1": 0.0,
+   "2": 0.0,
+   "3": 0.0,
+   "4": 5.284210830465975e-12,
+   "5": 2.808952075793707e-10
+  },
+  "seconds": 2561.7937042713165,
+  "note": "d1=5 inject[unitary]+cultivate, 2797 mechanisms; weight 6 not enumerated (next order estimated below 10% from the d1=3 series)"
+ },
+ "0.0005": {
+  "p": 0.0005,
+  "max_weight": 5,
+  "keep_rate": 0.3791872001991465,
+  "heralded_error_rate_proxy": 9.092875497414122e-12,
+  "floor_T": 1.8185750994828244e-11,
+  "by_weight_proxy": {
+   "0": 0.0,
+   "1": 0.0,
+   "2": 0.0,
+   "3": 0.0,
+   "4": 3.298128553935351e-13,
+   "5": 8.76306264202066e-12
+  },
+  "seconds": 0.24630498886108398,
+  "note": "d1=5 inject[unitary]+cultivate, 2797 mechanisms; weight 6 not enumerated (next order estimated below 10% from the d1=3 series)"
+ }
+}

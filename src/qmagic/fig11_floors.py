@@ -13,10 +13,11 @@ for i, p in enumerate((1e-3, 5e-4)):
             if s["p"] == p and s.get("d1") == d1 and not s.get("scaled") and s.get("errors", 0) >= 4:
                 pts[s["d2"]] = min(pts.get(s["d2"], 1), s["eps_T"])
         d2s = sorted(pts); ax[i].semilogy(d2s, [pts[d] for d in d2s], mk, color=col, ms=8, ls="--", label=f"cultivation $d_1={d1}$, measured floor at escape distance $d_2$")
-    try:
-        en = json.load(open(find("cultiv_enum_d3.json")))[f"{p:g}"]
-        ax[i].axhline(en["floor_T"], color="C0", ls=":", lw=1.5, label=f"$d_1=3$ cultivation stage, exact enumeration (w$\\leq${en['max_weight']})")
-    except (FileNotFoundError, KeyError) as e: print("no exact floor line:", repr(e))
+    for d1, col in ((3, "C0"), (5, "C3")):
+        try:
+            en = json.load(open(find(f"cultiv_enum_d{d1}.json")))[f"{p:g}"]
+            ax[i].axhline(en["floor_T"], color=col, ls=":", lw=1.5, label=f"$d_1={d1}$ cultivation stage, exact enumeration (w$\\leq${en['max_weight']})")
+        except (FileNotFoundError, KeyError) as e: print("no exact floor line:", repr(e))
     ax[i].axvline(11, color="gray", ls=":", lw=1); ax[i].text(11.3, 3e-10, "$d_{\\max}=11$", fontsize=8, color="gray"); ax[i].set_xticks(dx)
     ax[i].set_title(f"$p={p:g}$"); ax[i].set_xlabel("largest patch distance ($d_X$ for distillation, $d_2$ for cultivation)"); ax[i].grid(alpha=.3, which="both")
 ax[0].set_ylabel("error per output $|T\\rangle$ state (exit, before consumption)"); ax[0].legend(fontsize=7, loc="upper right")
