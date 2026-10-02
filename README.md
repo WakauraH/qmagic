@@ -52,7 +52,8 @@ The calibrations and cultivation reruns in `data/` were produced with Gidney's o
 ```bash
 pip install -e ".[dev,cultivation]"     # + sinter 1.16.0, chromobius 1.1.1
 scripts/fetch_external.sh               # clones Strilanc/magic-state-cultivation @ 871e68f and applies patches/
-qmagic-reproduce --calib                # surface-code memory calibrations, uniform / biased / erasure (~30 min on 16 cores)
+qmagic-reproduce --calib                # surface-code memory calibrations with sequential stopping (~6 min on 16 cores);
+                                        # writes results/calib_*_seq.json next to the shipped data/calib_*.json
 qmagic-reproduce --cultiv               # cultivation under biased noise (hours)
 python -m qmagic.cultivation <circuit_dir> <out.json> <shots> [procs]   # cultivation sampling runner (d2 scans, deep tails)
 python -m pytest -m external            # import check against the external repository

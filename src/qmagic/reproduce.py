@@ -3,7 +3,7 @@
     qmagic-reproduce            # fast (~1 min): every table and figure of the paper from data/ -> results/
     qmagic-reproduce --mc       # + the 8-minute single-shot Monte-Carlo PEC demo (qmagic.pec), cross-check of pec_exact
     qmagic-reproduce --verify   # + compare the regenerated JSON/CSV with reference/ (numbers to 1e-6 relative)
-    qmagic-reproduce --calib    # + p_L calibration with Stim/PyMatching (~15 min, correlated matching)
+    qmagic-reproduce --calib    # + p_L calibrations with Stim/PyMatching, sequential stopping (~6 min on 16 cores; needs external/)
     qmagic-reproduce --cultiv   # + cultivation reruns (needs scripts/fetch_external.sh; hours)
 """
 import argparse, runpy, subprocess, sys, time
@@ -45,8 +45,8 @@ def main():
     a = ap.parse_args()
     print(f"data: {DATA}\nresults: {RESULTS}")
     fails = 0
-    if a.calib:
-        fails += run_module("qmagic.calib", ["--corr"]); fails += run_module("qmagic.calib_noise", [])
+    if a.calib:   # sequential designs (~2 + ~4 min on 16 cores); outputs *_seq.json so the shipped calibrations stay the paper's inputs
+        fails += run_module("qmagic.calib_gidney", []); fails += run_module("qmagic.calib_noise", [])
     if a.cultiv:
         if not EXTERNAL.exists(): sys.exit("external repo missing: run scripts/fetch_external.sh")
         fails += run_module("qmagic.cultiv_noise", [])
