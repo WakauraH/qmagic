@@ -13,3 +13,4 @@ paper/*.blg
 paper/*.pdf
 .DS_Store
 paper/
+reference/pec_demo.json

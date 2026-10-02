@@ -15,14 +15,14 @@ reports physical qubits, sampling overhead and the largest feasible circuit size
 python3 -m venv .venv && source .venv/bin/activate      # Python >= 3.11
 pip install -e ".[dev]"                                 # numpy, scipy, matplotlib, stim 1.16.0, pymatching 2.4.0, pytest
 python -m pytest -m quick                               # 12 regression tests, < 1 min
-qmagic-reproduce --verify                               # ~6 min: regenerates every table/figure of the paper into results/
+qmagic-reproduce --verify                               # ~1 min: regenerates every table/figure of the paper into results/
                                                         # and checks the JSON/CSV outputs against reference/
 ```
 
 `qmagic-reproduce` runs, in order: the Litinski factory reconstruction, the three parameter-set builders, the claims and
-sensitivity sweeps, the acceptance-cutoff and hardware-Λ analyses, the single-shot PEC demo (5 min), the gap analysis, the
+sensitivity sweeps, the acceptance-cutoff and hardware-Λ analyses, the exact PEC calculation, the gap analysis, the
 noise-model comparison, and the figures. All of it is deterministic; `--verify` compares the regenerated files with
-`reference/` to a relative tolerance of 1e-6 (1e-2 for the Monte-Carlo PEC demo).
+`reference/` to a relative tolerance of 1e-6 (1e-2 for the optional Monte-Carlo PEC demo, `--mc`).
 
 ## What is shipped and what is regenerated
 
@@ -42,7 +42,7 @@ Where the paper's numbers come from:
 | Fig. 2 | `data/cultiv_*.json`, `data/gidney2024_fig1_points.json` |
 | Sec. V.D, Fig. 4 | `gap_qem.json`, `cutoff` step (stdout) |
 | Sec. V.E, Table V, Fig. 5 | `q3_nmax.csv`, `noise_costmodel.json` |
-| Appendix D | `pec_demo.json` |
+| Appendix D | `pec_exact.json` (`pec_demo.json` with `--mc`) |
 
 ## Slow paths (optional)
 
